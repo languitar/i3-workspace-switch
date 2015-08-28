@@ -15,6 +15,23 @@ python2 setup.py install --user
 ```
 Ensure that `~/.local/bin` is on your `PATH`.
 
+# Configuration
+
+In order to use this utility via shortcuts in i3, use something like this in your `~/.i3/config`:
+```
+# switch to workspace
+bindsym $mod+1 exec i3-workspace-switch 1
+bindsym $mod+2 exec i3-workspace-switch 2
+bindsym $mod+3 exec i3-workspace-switch 3
+bindsym $mod+4 exec i3-workspace-switch 4
+bindsym $mod+5 exec i3-workspace-switch 5
+bindsym $mod+6 exec i3-workspace-switch 6
+bindsym $mod+7 exec i3-workspace-switch 7
+bindsym $mod+8 exec i3-workspace-switch 8
+bindsym $mod+9 exec i3-workspace-switch 9
+bindsym $mod+0 exec i3-workspace-switch 10
+```
+
 # Usage
 
 ```
