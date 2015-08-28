@@ -6,12 +6,12 @@ This effectively allows to switch unnumbered workspaces as if they had consecuti
 # Installation
 
 ```sh
-python2 setup.py install
+python setup.py install
 ```
 
 Or if you only want to install this utility to your home folder:
 ```sh
-python2 setup.py install --user
+python setup.py install --user
 ```
 Ensure that `~/.local/bin` is on your `PATH`.
 
