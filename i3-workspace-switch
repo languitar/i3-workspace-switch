@@ -1,0 +1,58 @@
+#!/usr/bin/env python2
+
+import argparse
+import sys
+
+import i3
+
+
+def get_workspaces(where):
+    workspaces = i3.get_workspaces()
+    if where == 'CURRENT':
+        where = get_focused_output(workspaces)
+    return [w for w in workspaces if w['output'] == where]
+
+
+def get_focused_output(workspaces):
+    for workspace in workspaces:
+        if workspace['focused']:
+            return workspace['output']
+    assert False, 'According to the i3 IPC documentation there is always ' \
+        'a single focused workspace.'
+    return ''
+
+
+def main():
+    parser = argparse.ArgumentParser(
+        description='Utility for switching to unnumbered i3 workspaces '
+                    'using their relative position.',
+        formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+    parser.add_argument(
+        'number',
+        metavar='NUMBER',
+        type=int,
+        help='Number of the workspace to focus. Starting with 1.')
+    parser.add_argument(
+        '-w', '--where',
+        metavar='OUTPUT',
+        type=str,
+        default='CURRENT',
+        help='The output on which to search for this workspace to switch to. '
+             'Either an output name (from xrandr) or "CURRENT" '
+             'to use the current output.')
+
+    args = parser.parse_args()
+
+    if args.number < 1:
+        print('Workspace number must be >= 1')
+        sys.exit(1)
+
+    try:
+        i3.workspace(get_workspaces(args.where)[args.number - 1]['name'])
+    except IndexError:
+        print('There is no {}th workspace on the desired output'.format(
+            args.number))
+        sys.exit(1)
+
+if __name__ == '__main__':
+    main()
